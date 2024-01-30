@@ -1,0 +1,146 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "New value 01"
+    },
+    {
+      "id": "2",
+      "name": "Laptop 1"
+    },
+    {
+      "id": "9",
+      "name": "Hat"
+    },
+    {
+      "id": "10",
+      "name": "CPU 020202"
+    },
+    {
+      "id": "15",
+      "name": "Laptop 15"
+    }
+  ],
+  "products": [
+    {
+      "id": "aa3420c1-c414-4158-abdb-11743dee6b31",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "dbfa2be2-7329-48df-9205-2467c0581166",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "51f2de1a-b945-421b-abd7-272006fa2e59",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "2dfcc2dc-5b1f-4fa2-bbca-23551fa7d88a",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "b9fb664e-f391-4326-a751-38962b892c4d",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "3eca4f08-76ca-4449-ac0a-aec09a06e176",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "dd1ad19e-91a0-4632-82f1-4c43534ec75f",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "935f18f4-1068-4c7b-b504-87ddb8888769",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "9784e381-0c44-4452-8bc6-bd8c795ff5d6",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "f5ad8b04-e77d-4b7c-a2fa-185c4b57db92",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "fbd4292e-88d9-470c-b174-59f399e94f97",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "02d837f9-0425-45dd-b96c-017514ebe7cc",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "7a2b72ba-d06d-412b-978c-95eefb638465",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "e4813e20-721b-4354-acd2-92d026cc29d8",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    },
+    {
+      "id": "f16dbb48-3620-44f3-b7e0-0da42a452684",
+      "name": "d",
+      "price": "",
+      "quantity": "",
+      "description": "",
+      "categoryId": "phone"
+    }
+  ]
+}
