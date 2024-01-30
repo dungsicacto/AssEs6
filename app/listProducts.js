@@ -1,8 +1,9 @@
 import ProductServices from './services/ProductsServices'
 import JsonServerConstants from './constants/JsonServerConstants'
-import Product from './models/Product';
+import { Product } from './models/Product';
 import { getNameCategory } from './helpers/get_cata';
 import { Dialog } from './helpers/dialog';
+import { productSchema } from './models/Product';
 let img = undefined;
 const productServices = new ProductServices(JsonServerConstants.EndPoint);
 $(document).ready(function () {
@@ -25,8 +26,13 @@ $(document).ready(function () {
                     <td id="more">${quantity}</td>
                     <td id="more">${description}</td>
                     <td>
-                        <button href='deleteCategory.html?id=${id}'><i class="fa fa-pencil" aria-hidden="true"></i> Delete</button><br>
-                        <button onclick=deleProduct("${id}") aria-hidden="true" data-bs-toggle="modal" data-bs-target="#exampleModal"></i> Edit</button>
+                          <a href="/editProduct.html?id=${id}")>
+                            <button class="btn btn-primary m-1 btn-modal-edit-product" style="min-width: 110px">
+                              Edit
+                            </button><br>
+                          </a>
+                       
+                        <button onclick=deleProduct("${id}") class="btn btn-danger m-1" style="min-width: 110px":70px">Delete</button>
                     </td>
                 </tr>`;
         }
@@ -46,23 +52,32 @@ $(document).ready(function () {
     const price = $('#price').val();
     const quantity = $('#quantity').val();
     const categoryId = $('#category').val();
+    console.log("🚀 ~ $ ~ categoryId:", categoryId)
     const description = $('#description').val();
 
     let pro = new Product(
       id, name, img, price, quantity, description, categoryId
     )
-    productServices.addProduct(pro).then((data) => {
-      alert('create success');
-      // pop up ok
-    }).catch(e => {
-      // pop up loi
-    })
+    productSchema.validate(pro).then((data) => {
+      productServices.addProduct(pro)
+        .then((data) => {
+          // pop up ok
+          alert('create success');
+          location.reload();
+        })
+
+        .catch(e => {
+          // pop up loi
+        })
+    }).catch((err) => {
+      // ValidationError[]
+      alert(err);
+    });
   })
 })
 
 // encode img to base64-img
 const fileImage = document.getElementById('image')
-console.log(fileImage);
 
 fileImage.addEventListener('change', () => {
 
@@ -75,16 +90,46 @@ fileImage.addEventListener('change', () => {
     img = fr.result;
   }
 })
+
+// handler delete product
+
+
 function deleProduct(id) {
-  // console.log(id)
+  console.log(id)
   productServices.deleteProduct(id)
     .then(() => {
-      let html = Dialog("Oke bro", () => {
-        location.reload()
+      let diaglog = Dialog('Delete success', () => {
+        location.reload();
       })
-      let a = (document.createElement("diaglog"))
-      a.innerHTML = html
-      document.body.appendChild(a)
+      document.body.appendChild(diaglog);
+      // alert('Delete success');
+      // location.reload();  
+    })
+    .catch(e => {
     })
 }
 window.deleProduct = deleProduct;
+
+// handler edit product
+
+
+function editProduct(id) {
+
+  productServices.getProductById(id)
+    .then(data => {
+      const { id, name, price, quantity, description, categoryId } = data;
+      $('#id').val(id);
+      $('#name').val(name);
+      $('#price').val(price);
+      $('#quantity').val(quantity);
+      $('#description').val(description);
+      $('#category').val(categoryId);
+
+      productServices.editProduct(id, data)
+        .then(() => {
+          alert('Edit success');
+          location.reload();
+        })
+    })
+}
+window.editProduct = editProduct;

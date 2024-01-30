@@ -336,7 +336,7 @@
           <div class="col py-3">
             <button
               type="button"
-              class="btn btn-secondary"
+              class="btn btn-primary"
               id="btn-modal-create-product"
             >
               Create New Product
@@ -359,7 +359,7 @@
         </div>
       </div>
       
-      <div class="Modal" id="modal">
+      <div class="Modal" id="modal-insert-product">
         <div class="ModalContent">
           <span class="close">&times;</span>
 
@@ -430,10 +430,10 @@
                 aria-label="Default select example"
                 id="category"
               >
-                <option value="phone" selected>Phone</option>
-                <option value="keyboard">Keyboard</option>
-                <option value="mouse">Mouse</option>
-                <option value="combo">Combo</option>
+                <option value="0" selected>Phone</option>
+                <option value="1">Keyboard</option>
+                <option value="2">Mouse</option>
+                <option value="3">Combo</option>
               </select>
             </div>
             <button
@@ -446,7 +446,10 @@
           </form>
         </div>
       </div>
-
+      <form id="form-edit" style="display: none;">
+        <input type="button btn-primary" value="">
+      </form>
+      <input type="text">
     </main>
     <!-- link cdn -->
     <script

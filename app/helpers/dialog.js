@@ -1,5 +1,5 @@
 export function Dialog(msg, callback) {
-    return `  <!-- Modal -->
+    let a = `  <!-- Modal -->
     
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog  modal-dialog-centered">
@@ -17,4 +17,7 @@ export function Dialog(msg, callback) {
         </div>
       </div>
     </div>`
+    let diaglog = document.createElement();
+    diaglog.innerHTML = a;
+    return diaglog;
 }

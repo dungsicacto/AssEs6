@@ -1,9 +1,9 @@
 // Get the modal
-var modal = document.getElementById("modal");
+var modal = document.getElementById("modal-insert-product");
 
 // Get the button that opens the modal
 var btn = document.getElementById("btn-modal-create-product");
-
+var btnEdit = document.getElementsByClassName(".btn-modal-edit-product")[0];
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 

@@ -27,5 +27,24 @@ class ProductServices {
             
         }
     }
+
+    getProductById = async (id) => {
+        try {
+            const res = await axios.get(this.endPoint + this.collectionName + '/' + id)
+            return res.data;
+        } catch (error) {
+            throw new Error(`loi ${error.message}`)
+        }
+    }
+
+    editProduct = async (id, product) => {
+        try {
+            const res = await axios.put(this.endPoint + this.collectionName + '/' + id, product)
+            console.log(data);
+            return res.data;
+        } catch (error) {
+            throw new Error(`loi ${error.message}`)
+        }
+    }
 }
 export default ProductServices
