@@ -8,23 +8,70 @@ let img = undefined;
 
 const productServices = new ProductServices(JsonServerConstants.EndPoint);
 
-const id = window.location.toString().split('=')[1];
-
 $(document).ready(function () {
-    productServices.getProductById(id)
-        .then((data) => {
-            
-            const { id, categoryId, name, price, quantity, description } = data;
-            
-            $('#id').val(id);
+
+    // get id from url
+    const urlParams = new URLSearchParams(window.location.search);
+    const idUrl = urlParams.get('id');
+    console.log(idUrl);
+
+
+    // get product by id
+    productServices.getProductById(idUrl)
+        .then((oldData) => {
+            const { id,name, img, price, quantity, description, categoryId } = oldData;
+
             $('#name').val(name);
+            $('#img').val(img);
             $('#price').val(price);
             $('#quantity').val(quantity);
-            $('#category').val(categoryId);
-            $('#description').val(description);
+            $('#category').val(description);
+            $('#description').val(categoryId);
         })
-        .then()
+        // handler edit proudct
+        .then(() => {
+            $('#btn-edit-product').on('click', () => {
+                const id = $('#id').val();
+                const newName = $('#name').val();
+                const newPrice = $('#price').val();
+                const newQuantity = $('#quantity').val();
+                const newCategoryId = $('#category').val();
+                const newDescription = $('#description').val();
+
+                console.log(img);
+                let newPro = new Product(
+                    idUrl,newName, img, newPrice, newQuantity, newDescription, newCategoryId
+                )
+                productSchema.validate(newPro).then((data) => {
+                    productServices.editProduct(idUrl, newPro)
+                        .then(() => {
+                            alert('Update success');
+                            // window.location.href = '/listProducts.html';
+                        })
+                        .catch((err) => {
+                            alert('Update fail');
+                            // location.href = '/listProducts.html';
+                        })
+                })
+                    .catch((err) => {
+                        console.log(err.message);
+                    })
+            });
+        })
         .catch((err) => {
             console.log(err.message);
         })
+
+})
+// encode img to base64-img
+const fileImage = document.getElementById('image')
+
+fileImage.addEventListener('change', () => {
+
+    const fr = new FileReader();
+
+    fr.readAsDataURL(fileImage.files[0]);
+    fr.onload = (e) => {
+        img = fr.result;
+    }
 })

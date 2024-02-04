@@ -1,5 +1,5 @@
 // Get the modal
-var modal = document.getElementById("modal-insert-product");
+var modal = document.getElementById("modal-insert");
 
 // Get the button that opens the modal
 var btn = document.getElementById("btn-modal-create-product");

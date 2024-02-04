@@ -19,7 +19,7 @@ $(document).ready(function () {
           const { id, categoryId, name, price, quantity, description } = product;
           list +=
             `<tr>
-                    <td hidden value=>${id}>${id}</td>
+                    <td hidden value="${id}">${id}</td>
                     <td>${name}</td>
                     <td id="more" value=${categoryId}>${getNameCategory(categoryId)}</td>
                     <td id="more">${price}</td>
@@ -32,7 +32,7 @@ $(document).ready(function () {
                             </button><br>
                           </a>
                        
-                        <button onclick=deleProduct("${id}") class="btn btn-danger m-1" style="min-width: 110px":70px">Delete</button>
+                        <button onclick="deleteProduct(${id})" class="btn btn-danger m-1" style="min-width: 110px":70px">Delete</button>
                     </td>
                 </tr>`;
         }
@@ -45,19 +45,19 @@ $(document).ready(function () {
 
   // insert product
   $('#btn-create-product').on('click', () => {
+    
 
-    // encode image to base64
-    const id = crypto.randomUUID();
+    const id = Date.now().toString();
     const name = $('#name').val();
     const price = $('#price').val();
     const quantity = $('#quantity').val();
     const categoryId = $('#category').val();
-    console.log("🚀 ~ $ ~ categoryId:", categoryId)
     const description = $('#description').val();
 
     let pro = new Product(
       id, name, img, price, quantity, description, categoryId
     )
+    console.log(img);
     productSchema.validate(pro).then((data) => {
       productServices.addProduct(pro)
         .then((data) => {
@@ -84,52 +84,55 @@ fileImage.addEventListener('change', () => {
   const fr = new FileReader();
 
   fr.readAsDataURL(fileImage.files[0]);
-  document.getElementById('btn-create-product').disabled = true;
+  // document.getElementById('btn-edit-product').disabled = true;
   fr.onload = (e) => {
-    document.getElementById('btn-create-product').disabled = false;
+    // document.getElementById('btn-edit-product').disabled = false;
     img = fr.result;
   }
 })
 
 // handler delete product
 
-
-function deleProduct(id) {
-  console.log(id)
+console.log();
+function deleteProduct(id) {
+  console.log(id);
   productServices.deleteProduct(id)
     .then(() => {
-      let diaglog = Dialog('Delete success', () => {
-        location.reload();
-      })
-      document.body.appendChild(diaglog);
-      // alert('Delete success');
-      // location.reload();  
+      alert('Delete success');
+      location.reload();
+      // let diaglog = Dialog('Delete success', () => {
+      //   location.reload();
+      // })
+      // document.body.appendChild(diaglog);
+      // // alert('Delete success');
+      // location.reload();
     })
     .catch(e => {
+      alert ('Delete fail');
     })
 }
-window.deleProduct = deleProduct;
+window.deleteProduct = deleteProduct;
 
 // handler edit product
 
 
-function editProduct(id) {
+// function editProduct(id) {
 
-  productServices.getProductById(id)
-    .then(data => {
-      const { id, name, price, quantity, description, categoryId } = data;
-      $('#id').val(id);
-      $('#name').val(name);
-      $('#price').val(price);
-      $('#quantity').val(quantity);
-      $('#description').val(description);
-      $('#category').val(categoryId);
+//   productServices.getProductById(id)
+//     .then(data => {
+//       const { id, name, price, quantity, description, categoryId } = data;
+//       $('#id').val(id);
+//       $('#name').val(name);
+//       $('#price').val(price);
+//       $('#quantity').val(quantity);
+//       $('#description').val(description);
+//       $('#category').val(categoryId);
 
-      productServices.editProduct(id, data)
-        .then(() => {
-          alert('Edit success');
-          location.reload();
-        })
-    })
-}
-window.editProduct = editProduct;
+//       productServices.editProduct(id, data)
+//         .then(() => {
+//           alert('Edit success');
+//           location.reload();
+//         })
+//     })
+// }
+// window.editProduct = editProduct;

@@ -599,7 +599,7 @@ $(document).ready(function() {
                 const product = data[key];
                 const { id, categoryId, name, price, quantity, description } = product;
                 list += `<tr>
-                    <td hidden value=>${id}>${id}</td>
+                    <td hidden value="${id}">${id}</td>
                     <td>${name}</td>
                     <td id="more" value=${categoryId}>${(0, _getCata.getNameCategory)(categoryId)}</td>
                     <td id="more">${price}</td>
@@ -612,7 +612,7 @@ $(document).ready(function() {
                             </button><br>
                           </a>
                        
-                        <button onclick=deleProduct("${id}") class="btn btn-danger m-1" style="min-width: 110px":70px">Delete</button>
+                        <button onclick="deleteProduct(${id})" class="btn btn-danger m-1" style="min-width: 110px":70px">Delete</button>
                     </td>
                 </tr>`;
             }
@@ -623,15 +623,14 @@ $(document).ready(function() {
     }
     // insert product
     $("#btn-create-product").on("click", ()=>{
-        // encode image to base64
-        const id = crypto.randomUUID();
+        const id = Date.now().toString();
         const name = $("#name").val();
         const price = $("#price").val();
         const quantity = $("#quantity").val();
         const categoryId = $("#category").val();
-        console.log("\uD83D\uDE80 ~ $ ~ categoryId:", categoryId);
         const description = $("#description").val();
         let pro = new (0, _product.Product)(id, name, img, price, quantity, description, categoryId);
+        console.log(img);
         (0, _product.productSchema).validate(pro).then((data)=>{
             productServices.addProduct(pro).then((data)=>{
                 // pop up ok
@@ -651,43 +650,94 @@ const fileImage = document.getElementById("image");
 fileImage.addEventListener("change", ()=>{
     const fr = new FileReader();
     fr.readAsDataURL(fileImage.files[0]);
-    document.getElementById("btn-create-product").disabled = true;
+    // document.getElementById('btn-edit-product').disabled = true;
     fr.onload = (e)=>{
-        document.getElementById("btn-create-product").disabled = false;
+        // document.getElementById('btn-edit-product').disabled = false;
         img = fr.result;
     };
 });
 // handler delete product
-function deleProduct(id) {
+console.log();
+function deleteProduct(id) {
     console.log(id);
     productServices.deleteProduct(id).then(()=>{
-        let diaglog = (0, _dialog.Dialog)("Delete success", ()=>{
-            location.reload();
-        });
-        document.body.appendChild(diaglog);
-    // alert('Delete success');
-    // location.reload();  
-    }).catch((e)=>{});
-}
-window.deleProduct = deleProduct;
-// handler edit product
-function editProduct(id) {
-    productServices.getProductById(id).then((data)=>{
-        const { id, name, price, quantity, description, categoryId } = data;
-        $("#id").val(id);
-        $("#name").val(name);
-        $("#price").val(price);
-        $("#quantity").val(quantity);
-        $("#description").val(description);
-        $("#category").val(categoryId);
-        productServices.editProduct(id, data).then(()=>{
-            alert("Edit success");
-            location.reload();
-        });
+        alert("Delete success");
+        location.reload();
+    // let diaglog = Dialog('Delete success', () => {
+    //   location.reload();
+    // })
+    // document.body.appendChild(diaglog);
+    // // alert('Delete success');
+    // location.reload();
+    }).catch((e)=>{
+        alert("Delete fail");
     });
 }
-window.editProduct = editProduct;
+window.deleteProduct = deleteProduct; // handler edit product
+ // function editProduct(id) {
+ //   productServices.getProductById(id)
+ //     .then(data => {
+ //       const { id, name, price, quantity, description, categoryId } = data;
+ //       $('#id').val(id);
+ //       $('#name').val(name);
+ //       $('#price').val(price);
+ //       $('#quantity').val(quantity);
+ //       $('#description').val(description);
+ //       $('#category').val(categoryId);
+ //       productServices.editProduct(id, data)
+ //         .then(() => {
+ //           alert('Edit success');
+ //           location.reload();
+ //         })
+ //     })
+ // }
+ // window.editProduct = editProduct;
 
-},{"./services/ProductsServices":"i8l53","./constants/JsonServerConstants":"6L6hL","./models/Product":"b4We3","./helpers/get_cata":"etWGJ","./helpers/dialog":"bK6hi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["kJvZR","2Mac5"], "2Mac5", "parcelRequire0684")
+},{"./services/ProductsServices":"i8l53","./constants/JsonServerConstants":"6L6hL","./models/Product":"b4We3","./helpers/get_cata":"etWGJ","./helpers/dialog":"bK6hi","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"etWGJ":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "getNameCategory", ()=>getNameCategory);
+parcelHelpers.export(exports, "getMapCategory", ()=>getMapCategory);
+let listCategory = {
+    0: "Table",
+    1: "Phone",
+    2: "Ipad"
+};
+function getNameCategory(id) {
+    return listCategory[id];
+}
+function getMapCategory() {
+    return listCategory;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"bK6hi":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Dialog", ()=>Dialog);
+function Dialog(msg, callback) {
+    let a = `  <!-- Modal -->
+    
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Message</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+          <p>${msg}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" onclick="(${callback})()">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    let diaglog = document.createElement();
+    diaglog.innerHTML = a;
+    return diaglog;
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["kJvZR","2Mac5"], "2Mac5", "parcelRequire0684")
 
 //# sourceMappingURL=listProducts.eb735507.js.map
